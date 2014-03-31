@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+	<head>
+		<script type="text/javascript" src="./javascripts/angular.min.js"></script>
+		<script type="text/javascript" src="./javascripts/resource.min.js"></script>
+	</head>
+	<body>
+		<div ng-controller="MainCtrl">
+			<ul>
+				<li ng-repeat="task in tasks">{{task.title}}</li>
+			</ul>
+			
+			<%=@header%>
+		</div>
+		
+		<script type="text/javascript">
+			var myApp = angular.module("myApp", ['ngResource']);
+			myApp.controller('MainCtrl', function($scope, $resource){
+				Task = $resource("/tasks/:taskId", {taskId: "@id"});
+				$scope.tasks = Task.query();
+			});
+		
+		</script>
+	</body>
+</html>
